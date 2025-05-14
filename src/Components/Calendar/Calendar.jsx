@@ -1,8 +1,18 @@
 import React from "react";
-import styles from "./Calendar.module.css";
+import CalendarBody from "./CalendarBody";
+import CalendarHeader from "./CalendarHeader";
 
 const Calendar = () => {
-  return <h1 className={styles.nome}>teste</h1>;
+  const today = new Date();
+
+  const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
+
+  return (
+    <section>
+      <CalendarHeader />
+      <CalendarBody />
+    </section>
+  );
 };
 
 export default Calendar;
