@@ -9,11 +9,11 @@ const Options = () => {
       </div>
       <div>
         <div className="bg-green-500 size-5 rounded-full"></div>
-        <div>Afternoon</div>
+        <div className="text-gray-500">Afternoon</div>
       </div>
       <div>
         <div className="bg-blue-600 size-5 rounded-full"></div>
-        <div>Night</div>
+        <div className="text-gray-500">Night</div>
       </div>
     </div>
   );
