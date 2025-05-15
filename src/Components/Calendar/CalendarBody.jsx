@@ -36,11 +36,11 @@ const CalendarBody = () => {
           {day === currentDate && (
             <div className="size-7 z-[-1] top-[.1875rem] absolute left-1/2 -translate-x-1/2 rounded-full bg-gray-600"></div>
           )}
-          {day != null ? (
+          {/* {day != null ? (
             <div className="h-4 mt-1 w-11 m-auto bg-gray-100 rounded-md border-1 border-gray-300"></div>
           ) : (
             ""
-          )}
+          )} */}
         </div>
       ))}
     </div>
