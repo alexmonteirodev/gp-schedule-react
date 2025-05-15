@@ -8,7 +8,7 @@ const Months = ({ months, currentMonth, currentYear }) => {
         <LeftArrow className="size-7" />
         <span className="">{currentYear}</span>
       </div>
-      <div className="font-bold text-3xl ">{months[currentMonth]}</div>
+      <div className="font-bold text-3xl pl-4">{months[currentMonth]}</div>
     </div>
   );
 };
