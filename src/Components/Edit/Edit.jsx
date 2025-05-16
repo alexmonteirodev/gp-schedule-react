@@ -1,6 +1,6 @@
 import React from "react";
 import Pencil from "./Pencil.jsx";
-import Options from "./options.jsx";
+import Options from "./Options.jsx";
 import Close from "./Close";
 import { useCalendar } from "../../CalendarContext";
 
