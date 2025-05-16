@@ -3,6 +3,7 @@ import Pencil from "./Pencil.jsx";
 import Options from "./Options.jsx";
 import Close from "./Close";
 import { useCalendar } from "../../CalendarContext";
+import Hours from "./Hours";
 
 const Edit = () => {
   const [optionsAppear, setOptionsAppear] = React.useState(false);
@@ -28,6 +29,7 @@ const Edit = () => {
       ) : (
         <Pencil onClick={handleClickPencil} />
       )}
+      <Hours optionsAppear={optionsAppear} />
     </>
   );
 };
