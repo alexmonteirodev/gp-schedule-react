@@ -12,10 +12,10 @@ export const CalendarProvider = ({ children }) => {
   const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
   const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
 
-  console.log(today);
-  console.log(currentDate);
-  console.log(currentMonth);
-  console.log(currentYear);
+  //   console.log(today);
+  //   console.log(currentDate);
+  //   console.log(currentMonth);
+  //   console.log(currentYear);
 
   return (
     <CalendarContext.Provider

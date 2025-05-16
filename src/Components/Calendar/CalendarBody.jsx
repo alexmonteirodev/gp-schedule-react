@@ -1,16 +1,16 @@
 import React from "react";
 import { getDaysInMonth, startOfMonth, getDay } from "date-fns";
+import { useCalendar } from "../../CalendarContext";
 
 const CalendarBody = () => {
-  const today = new Date();
-  const currentDate = today.getDate();
+  const { today, currentDate, currentMonth, currentYear } = useCalendar();
 
-  const monthDays = getDaysInMonth(
-    new Date(today.getFullYear(), today.getMonth())
-  );
-  const startDay = getDay(
-    startOfMonth(new Date(today.getFullYear(), today.getMonth()))
-  );
+  const date = new Date(currentYear, currentMonth);
+
+  const monthDays = getDaysInMonth(date);
+
+  const startDay = getDay(startOfMonth(date));
+
   const mondayToSunday = startDay === 0 ? 6 : startDay - 1;
 
   const daysArray = [];
@@ -22,7 +22,8 @@ const CalendarBody = () => {
   for (let i = 1; i <= monthDays; i++) {
     daysArray.push(i);
   }
-  console.log(daysArray);
+
+  console.log(today);
   return (
     <div className="grid grid-cols-7 mt-3">
       {daysArray.map((day, i) => (
