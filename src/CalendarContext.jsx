@@ -11,6 +11,7 @@ export const CalendarProvider = ({ children }) => {
   const currentDate = today.getDate();
   const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
   const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
+  const [selectedOption, setSelectedOption] = React.useState(null);
 
   //   console.log(today);
   //   console.log(currentDate);
@@ -26,6 +27,8 @@ export const CalendarProvider = ({ children }) => {
         setCurrentMonth,
         currentYear,
         setCurrentYear,
+        selectedOption,
+        setSelectedOption,
       }}
     >
       {children}

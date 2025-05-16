@@ -1,13 +1,9 @@
 import React from "react";
 
-const Options = () => {
-  const [selectedOption, setSelectedOption] = React.useState(null);
-
+const Options = ({ selectedOption, setSelectedOption }) => {
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
-
-  // console.log(selectedOption);
 
   return (
     <div className="animate-slideIn flex justify-center absolute bottom-3 left-1/2 -translate-x-1/2 gap-5 divide-x-1 divide-gray-300 px-3 *:flex *:flex-col *:items-center *:pr-4 bg-gray-100 py-3 rounded-2xl">

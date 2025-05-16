@@ -3,7 +3,8 @@ import { getDaysInMonth, startOfMonth, getDay } from "date-fns";
 import { useCalendar } from "../../CalendarContext";
 
 const CalendarBody = () => {
-  const { today, currentDate, currentMonth, currentYear } = useCalendar();
+  const { today, currentDate, currentMonth, currentYear, selectedOption } =
+    useCalendar();
 
   const date = new Date(currentYear, currentMonth);
 
@@ -22,7 +23,6 @@ const CalendarBody = () => {
   for (let i = 1; i <= monthDays; i++) {
     daysArray.push(i);
   }
-
   return (
     <div className="grid grid-cols-7 mt-3">
       {daysArray.map((day, i) => {
@@ -41,13 +41,24 @@ const CalendarBody = () => {
             {isToday && (
               <div className="size-7 z-[-1] top-[.1875rem] absolute left-1/2 -translate-x-1/2 rounded-full bg-gray-600"></div>
             )}
-            {/* {day != null ? (
-              <p className="h-4 mt-1 w-11 m-auto bg-yellow-400 rounded-md border-1 border-gray-300 text-[0.6rem] font-medium">
-                Morning
-              </p>
+            {day != null && selectedOption ? (
+              <div
+                className={`h-4 mt-1 w-11 m-auto  rounded-md border-1 border-gray-300 text-[0.5rem] font-medium text-center flex
+                  ${selectedOption === "morning" ? "bg-yellow-400" : ""}
+                  ${selectedOption === "afternoon" ? "bg-green-500" : ""}
+                  ${
+                    selectedOption === "night" ? `bg-blue-600 text-white` : ""
+                  }`}
+              >
+                {selectedOption && (
+                  <p className="justify-center m-auto capitalize">
+                    {selectedOption}
+                  </p>
+                )}
+              </div>
             ) : (
               ""
-            )} */}
+            )}
           </div>
         );
       })}

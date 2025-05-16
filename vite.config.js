@@ -5,5 +5,6 @@ import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/gp-schedule-react/",
   plugins: [react(), tailwindcss(), svgr()],
 });

@@ -2,9 +2,11 @@ import React from "react";
 import Pencil from "./Pencil.jsx";
 import Options from "./options.jsx";
 import Close from "./Close";
+import { useCalendar } from "../../CalendarContext";
 
 const Edit = () => {
   const [optionsAppear, setOptionsAppear] = React.useState(false);
+  const { selectedOption, setSelectedOption } = useCalendar();
 
   const handleClickPencil = () => {
     setOptionsAppear(true);
@@ -18,7 +20,10 @@ const Edit = () => {
       {optionsAppear ? (
         <div>
           <Close onClick={handleClose} />
-          <Options />
+          <Options
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
         </div>
       ) : (
         <Pencil onClick={handleClickPencil} />
