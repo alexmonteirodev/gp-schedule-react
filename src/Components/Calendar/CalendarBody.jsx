@@ -1,69 +1,55 @@
 import React from "react";
-import { getDaysInMonth, startOfMonth, getDay } from "date-fns";
-import { useCalendar } from "../../CalendarContext";
+import { getDaysInMonth, startOfMonth, getDay, format } from "date-fns";
 
-const CalendarBody = () => {
-  const { today, currentDate, currentMonth, currentYear, selectedOption } =
-    useCalendar();
+const CalendarAnnual = () => {
+  const currentYear = new Date().getFullYear();
 
-  const date = new Date(currentYear, currentMonth);
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date(currentYear, i);
+    const daysInMonth = getDaysInMonth(date);
+    const startWeekDay = getDay(startOfMonth(date)); // 0 = Sunday
 
-  const monthDays = getDaysInMonth(date);
+    // Ajustar para semana começando em segunda
+    const offset = startWeekDay === 0 ? 6 : startWeekDay - 1;
 
-  const startDay = getDay(startOfMonth(date));
+    const days = Array(offset)
+      .fill(null)
+      .concat(Array.from({ length: daysInMonth }, (_, j) => j + 1));
 
-  const mondayToSunday = startDay === 0 ? 6 : startDay - 1;
+    return {
+      name: format(date, "MMMM"),
+      number: i,
+      days,
+    };
+  });
 
-  const daysArray = [];
-
-  for (let i = 0; i < mondayToSunday; i++) {
-    daysArray.push(null);
-  }
-
-  for (let i = 1; i <= monthDays; i++) {
-    daysArray.push(i);
-  }
   return (
-    <div className="grid grid-cols-7 mt-3">
-      {daysArray.map((day, i) => {
-        const isToday =
-          day === currentDate &&
-          currentMonth === today.getMonth() &&
-          currentYear === today.getFullYear();
-        return (
-          <div
-            key={i}
-            className={`h-20 text-center font-bold text-[1.10rem] border-t-1 border-gray-200 relative pt-1 ${
-              isToday ? " text-white" : ""
-            }`}
-          >
-            {day}
-            {isToday && (
-              <div className="size-7 z-[-1] top-[.1875rem] absolute left-1/2 -translate-x-1/2 rounded-full bg-gray-600"></div>
-            )}
-            {day != null && selectedOption ? (
-              <div
-                className={`h-4 mt-1 w-11 m-auto  rounded-md border-1 border-gray-300 text-[0.5rem] font-medium text-center flex
-                  ${selectedOption === "morning" ? "bg-yellow-400" : ""}
-                  ${selectedOption === "afternoon" ? "bg-green-500" : ""}
-                  ${
-                    selectedOption === "night" ? `bg-blue-600 text-white` : ""
-                  }`}
-              >
-                {selectedOption && (
-                  <p className="justify-center m-auto capitalize">
-                    {selectedOption}
-                  </p>
-                )}
+    <div className=" h-[25rem] w-full grid grid-cols-1 overflow-y-scroll snap-y snap-mandatory">
+      {months.map((month, index) => (
+        <div
+          key={index}
+          className="min-w-full snap-center p-4 border-r border-gray-200"
+        >
+          <h2 className="text-2xl font-bold text-center mb-4">{month.name}</h2>
+          <div className="grid grid-cols-7 gap-2 text-center text-sm">
+            {["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"].map((d) => (
+              <div key={d} className="font-semibold text-gray-600">
+                {d}
               </div>
-            ) : (
-              ""
-            )}
+            ))}
+            {month.days.map((day, i) => (
+              <div
+                key={i}
+                className="h-12 flex items-center justify-center border border-gray-300 rounded"
+              >
+                {day || ""}
+              </div>
+            ))}
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default CalendarBody;
+export default CalendarAnnual;
