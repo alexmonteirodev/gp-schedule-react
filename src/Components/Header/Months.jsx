@@ -1,7 +1,9 @@
 import React from "react";
 import LeftArrow from "../../assets/svg/left-arrow.svg?react";
 
-const Months = ({ months, currentMonth, currentYear }) => {
+const Months = ({ months, currentMonth, currentYear, yearArr }) => {
+  console.log(yearArr[1].monthIndex);
+  console.log(months);
   return (
     <div>
       <div className="flex items-center text-gray-600 absolute top-2 left-3">

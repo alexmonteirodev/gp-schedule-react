@@ -4,20 +4,7 @@ import Nav from "./Nav";
 import { useCalendar } from "../../CalendarContext";
 
 const Header = () => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const { months, yearArr } = useCalendar();
 
   const { currentMonth, setCurrentMonth, currentYear, setCurrentYear } =
     useCalendar();
@@ -28,6 +15,7 @@ const Header = () => {
         currentYear={currentYear}
         currentMonth={currentMonth}
         months={months}
+        yearArr={yearArr}
       />
       <Nav
         months={months}
