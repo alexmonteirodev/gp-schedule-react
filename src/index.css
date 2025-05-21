@@ -27,9 +27,3 @@
     }
   }
 }
-.scrollbar-hide::-webkit-scrollbar {
-  @apply display: none;
-}
-.scrollbar-hide {
-  @apply -ms-overflow-style: none, scrollbar-width: none; /* IE/Edge & Firefox */
-}
