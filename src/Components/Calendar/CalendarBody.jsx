@@ -2,6 +2,7 @@ import React from "react";
 import { useCalendar } from "../../CalendarContext";
 
 const CalendarBody = () => {
+  const { today } = useCalendar();
   const { yearArr } = useCalendar();
 
   console.log(yearArr);
@@ -12,7 +13,7 @@ const CalendarBody = () => {
           key={i}
           className="mb-8 snap-center flex flex-col justify-start items-center min-h-screen gap-20"
         >
-          <h2 className="font-bold text-3xl place-self-start z-20 pt-7">
+          <h2 className="font-bold text-3xl place-self-start z-20 pt-7 ">
             {month.name}
           </h2>
           <div className="grid grid-cols-7 w-full">
@@ -31,21 +32,6 @@ const CalendarBody = () => {
   );
 };
 
-// className="grid grid-cols-7 text-center mt-4"
-
-// [
-//   {
-//     name: "Janeiro",
-//     monthIndex: 0,
-//     days: [null, null, 1, 2, 3, ..., 31]
-//   },
-//   {
-//     name: "Fevereiro",
-//     monthIndex: 1,
-//     days: [null, 1, 2, ..., 28]
-//   },
-//   ...
-// ]
 export default CalendarBody;
 
 // import React from "react";

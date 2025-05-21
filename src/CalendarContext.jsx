@@ -13,7 +13,6 @@ export const CalendarProvider = ({ children }) => {
   const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
   const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
   const [selectedOption, setSelectedOption] = React.useState(null);
-  const [currentMonthState, setCurrentMonthState] = React.useState("");
 
   const months = [
     "January",
