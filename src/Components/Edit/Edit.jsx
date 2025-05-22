@@ -17,17 +17,21 @@ const Edit = () => {
 
   const handleClose = () => {
     setOptionsAppear(false);
-    // Espera a animação terminar antes de desmontar
+
     setTimeout(() => {
       setIsVisible(false);
-    }, 150); // Tempo da animação
+    }, 150);
   };
 
   return (
     <>
       {isVisible ? (
         <div>
-          <Close onClick={handleClose} selectedOption={selectedOption} />
+          <Close
+            onClick={handleClose}
+            selectedOption={selectedOption}
+            optionsAppear={optionsAppear}
+          />
           <Options
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}

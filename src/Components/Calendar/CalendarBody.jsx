@@ -14,7 +14,7 @@ const CalendarBody = () => {
 
   //abre o calendario no mes atual
   React.useEffect(() => {
-    setVisibleMonth(currentMonth);
+    setVisibleMonth(currentMonth + 1);
 
     if (containerRef.current) {
       containerRef.current.scrollTo({
