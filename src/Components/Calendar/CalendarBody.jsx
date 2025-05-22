@@ -12,7 +12,7 @@ const CalendarBody = () => {
   } = useCalendar();
   const containerRef = React.useRef(null);
 
-  //abre o calendario no mes atual
+  // abre o calendário no mês atual
   React.useEffect(() => {
     setVisibleMonth(currentMonth);
 
@@ -23,27 +23,30 @@ const CalendarBody = () => {
     }
   }, [currentMonth, setVisibleMonth]);
 
-  //define qual mes está visivel
+  // define qual mês está visível
   React.useEffect(() => {
-    const scrollToMonth = () => {
-      if (containerRef.current) {
-        containerRef.current.scrollTo({
-          top: currentMonth * containerRef.current.clientHeight,
-          behavior: "auto",
-        });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          const index = Number(visibleEntry.target.dataset.index);
+          setVisibleMonth(index);
+        }
+      },
+      {
+        root: containerRef.current,
+        threshold: 0.6,
       }
-    };
+    );
 
-    // espera um tick de render
-    const timeout = setTimeout(() => {
-      setVisibleMonth(currentMonth);
-      scrollToMonth();
-    }, 50); // um pequeno delay garante que o layout carregue
+    const sections = containerRef.current.querySelectorAll("[data-index]");
+    sections.forEach((section) => observer.observe(section));
 
-    return () => clearTimeout(timeout);
-  }, [currentMonth, setVisibleMonth]);
+    return () => observer.disconnect();
+  }, [setVisibleMonth]);
 
   console.log(currentDate);
+
   return (
     <div
       ref={containerRef}
@@ -65,12 +68,10 @@ const CalendarBody = () => {
               return (
                 <div
                   key={i}
-                  className={`h-20 text-center font-bold text-[1.10rem] border-t-1 border-gray-200 relative pt-1 ${
-                    isToday ? "text-white" : ""
-                  }`}
+                  className="h-20 text-center font-bold text-[1.10rem] border-t-1 border-gray-200 relative pt-1"
                 >
                   {isToday && (
-                    <div className="size-7 z-[-1] top-[.1875rem] absolute left-1/2 -translate-x-1/2 rounded-full bg-gray-600 "></div>
+                    <div className="w-7 h-7 rounded-full bg-red-600"></div>
                   )}
                   {day !== null ? day : ""}
                 </div>
