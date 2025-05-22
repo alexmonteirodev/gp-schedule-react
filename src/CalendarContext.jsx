@@ -29,35 +29,31 @@ export const CalendarProvider = ({ children }) => {
     "December",
   ];
 
-  // Memoiza o array do ano
-  const yearArr = React.useMemo(() => {
-    const arr = [];
-    for (let i = 0; i <= 11; i++) {
-      const date = new Date(currentYear, i);
-      const monthDays = getDaysInMonth(date);
-      const startDay = getDay(startOfMonth(date));
+  // logica array calendario com todos os meses
+  const yearArr = [];
 
-      const mondayToSunday = startDay === 0 ? 6 : startDay - 1;
+  for (let i = 0; i <= 11; i++) {
+    const date = new Date(currentYear, i);
+    const monthDays = getDaysInMonth(date);
+    const startDay = getDay(startOfMonth(date));
 
-      const daysMonthArr = [];
+    const mondayToSunday = startDay === 0 ? 6 : startDay - 1;
 
-      for (let n = 0; n < mondayToSunday; n++) {
-        daysMonthArr.push(null);
-      }
-      for (let d = 1; d <= monthDays; d++) {
-        daysMonthArr.push(d);
-      }
+    const daysMonthArr = [];
 
-      arr.push({
-        name: months[i],
-        monthIndex: i,
-        days: daysMonthArr,
-        year: currentYear, // importante para o CalendarBody
-      });
+    for (let n = 0; n < mondayToSunday; n++) {
+      daysMonthArr.push(null);
     }
-    return arr;
-  }, [currentYear, months]);
+    for (let d = 1; d <= monthDays; d++) {
+      daysMonthArr.push(d);
+    }
 
+    yearArr.push({
+      name: months[i],
+      monthIndex: i,
+      days: daysMonthArr,
+    });
+  }
   const [visibleMonth, setVisibleMonth] = React.useState(yearArr[0].monthIndex);
 
   return (
