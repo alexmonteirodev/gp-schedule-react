@@ -25,25 +25,23 @@ const CalendarBody = () => {
 
   //define qual mes está visivel
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries.find((entry) => entry.isIntersecting);
-        if (visibleEntry) {
-          const index = Number(visibleEntry.target.dataset.index);
-          setVisibleMonth(index);
-        }
-      },
-      {
-        root: containerRef.current,
-        threshold: 0.6,
+    const scrollToMonth = () => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          top: currentMonth * containerRef.current.clientHeight,
+          behavior: "auto",
+        });
       }
-    );
+    };
 
-    const sections = containerRef.current.querySelectorAll("[data-index]");
-    sections.forEach((section) => observer.observe(section));
+    // espera um tick de render
+    const timeout = setTimeout(() => {
+      setVisibleMonth(currentMonth);
+      scrollToMonth();
+    }, 50); // um pequeno delay garante que o layout carregue
 
-    return () => observer.disconnect();
-  }, [setVisibleMonth]);
+    return () => clearTimeout(timeout);
+  }, [currentMonth, setVisibleMonth]);
 
   console.log(currentDate);
   return (
