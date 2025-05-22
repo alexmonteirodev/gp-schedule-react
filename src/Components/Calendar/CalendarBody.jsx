@@ -2,29 +2,82 @@ import React from "react";
 import { useCalendar } from "../../CalendarContext";
 
 const CalendarBody = () => {
-  const { today } = useCalendar();
-  const { yearArr } = useCalendar();
+  const {
+    yearArr,
+    currentDate,
+    setVisibleMonth,
+    currentMonth,
+    today,
+    currentYear,
+  } = useCalendar();
+  const containerRef = React.useRef(null);
 
-  console.log(yearArr);
+  //abre o calendario no mes atual
+  React.useEffect(() => {
+    setVisibleMonth(currentMonth);
+
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: currentMonth * window.innerHeight,
+      });
+    }
+  }, [currentMonth, setVisibleMonth]);
+
+  //define qual mes está visivel
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          const index = Number(visibleEntry.target.dataset.index);
+          setVisibleMonth(index);
+        }
+      },
+      {
+        root: containerRef.current,
+        threshold: 0.6,
+      }
+    );
+
+    const sections = containerRef.current.querySelectorAll("[data-index]");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [setVisibleMonth]);
+
+  console.log(currentDate);
   return (
-    <div className="overflow-y-scroll snap-y snap-mandatory h-screen scrollbar-hide">
+    <div
+      ref={containerRef}
+      className="overflow-y-scroll snap-y snap-mandatory h-screen scrollbar-hide"
+    >
       {yearArr.map((month, i) => (
         <div
           key={i}
+          data-index={month.monthIndex}
           className="mb-8 snap-center flex flex-col justify-start items-center min-h-screen gap-20"
         >
-          <h2 className="font-bold text-3xl place-self-start z-20 pt-7 ">
-            {month.name}
-          </h2>
           <div className="grid grid-cols-7 w-full">
-            {month.days.map((day, i) => (
-              <div
-                key={i}
-                className="h-20 text-center font-bold text-[1.10rem] border-t-1 border-gray-200 relative pt-1 "
-              >
-                {day !== null ? day : ""}
-              </div>
-            ))}
+            {month.days.map((day, i) => {
+              const isToday =
+                day === currentDate &&
+                month.monthIndex === today.getMonth() &&
+                month.year === today.getFullYear();
+
+              return (
+                <div
+                  key={i}
+                  className={`h-20 text-center font-bold text-[1.10rem] border-t-1 border-gray-200 relative pt-1 ${
+                    isToday ? "text-white" : ""
+                  }`}
+                >
+                  {isToday && (
+                    <div className="size-7 z-[-1] top-[.1875rem] absolute left-1/2 -translate-x-1/2 rounded-full bg-gray-600 "></div>
+                  )}
+                  {day !== null ? day : ""}
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}
